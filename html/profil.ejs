@@ -1,0 +1,63 @@
+<%- include('ek/header', {bot, user, path}) %>
+<div class="container">
+  <div align="center" class="jumbotron">
+
+       <img src="https://cdn.discordapp.com/avatars/<%=kisi.id%>/<%=kisi.avatar%>.png?size=512" class="rounded-circle panell">
+       <h3 style="color:#fff"><%=kisi.username%>#<%=kisi.discriminator%></h3>
+       <h5 style="color:#fff">Profil Bilgisi</h5>
+
+       <% if (bot.profil[kisi.id]) { %>
+        <h6 style="color:#fff">İsim: <%= bot.profil[kisi.id].isim || "Bilinmiyor" %></h6><br>
+        <h6 style="color:#fff">Yaş: <%= bot.profil[kisi.id].yas || "Bilinmiyor" %></h6><br>
+        <h6 style="color:#fff">Biyografi: <%= bot.profil[kisi.id].biyo %></h6>
+        <h6 style="color:#ffff">Favori kodlama dili: <%= bot.profil[kisi.id].favlib || "Yok" %></h6><br>
+        <h6 style="color:#fff">Bildiği kodlama dilleri: <%= bot.profil[kisi.id].libs || "Yok" %></h6>
+       <% } else { %>
+        <h6 style="color:#fff">Profil bilgisi ayarlanmamış.</h6>
+       <% } %>
+    
+     <a href="/kullanici/<%=kisi.id%>/profil/ayarla" class="btn btn-default" style="background-color:#333; color:#fff">Profili Düzenle</a>
+
+  </div>
+
+  <h3 style="color:white"><%=kisi.tag%> adlı kullanıcının botları</h3>
+<br>
+  <% if (bot.ayar.has('botlar')) { %>
+    <% if (bot.ayar.has(`kbotlar.${user.id}`)) { %>   
+
+<%for(var i = 0; i < Object.keys(bot.ayar.fetch('botlar')).length; i++) {%>
+<% var idd = Object.keys(bot.ayar.fetch('botlar'))[i] %>
+<%  if (bot.ayar.fetch(`botlar.${idd}.sahipid`) === kisi.id) { %>
+<div class="col-12 col-sm-6 col-md-4">
+        <div class="card card-lg botcard" style="background-color:#27292e; width: 350px; border:1px solid black;">
+     <div  style="margin:5%;"class="card-img"><br/>
+         &emsp;<a href="/bot/<%=idd%>"><img src="<%=bot.ayar.fetch(`botlar.${idd}.avatar`)%>" style="width:100px; height:100px; border-radius:5px; float:left;" ></a>
+      <strong style='color: white;'>Vote : <span style='color:whitesmoke; text-transform: none;'><%=bot.ayar.fetch(`botlar.${idd}.oy`)||0%></strong></span><br/>
+       &emsp;<a style="color:white; font-size:30px;"><%=bot.useful.seg(bot.ayar.fetch(`botlar.${idd}.isim`), 5)%></a><br/>
+       <a class="card-text" style="color:white">&emsp;<%=bot.ayar.fetch(`botlar.${idd}.sahip`)%></a>
+                            </div>
+                            <div style="background-color:#27292e" class="card-block">
+                             <p class="card-text" style="color:white; font-size:15px; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=bot.ayar.fetch(`botlar.${idd}.kisaaciklama`)%></p>
+                             <hr/>
+                              <h6 align="center"><a href="/bot/<%=idd%>"><button style="font-size:20px; color:white; background-color:#27292e; border:none; width:150px; height:35px; border-radius:5px">View</button></a>&nbsp;
+                                <a href="https://discordapp.com/oauth2/authorize?client_id=<%=idd%>&scope=bot&permissions=8" ><button style="font-size:20px; color:white; background-color:#27292e; border:none; width:150px; height:35px; border-radius:5px">Invite</button></a></h6>
+                            </div>
+                       </div><br>
+      </div>
+<% } %>
+<% } %>
+</div>
+   
+   <% } else if (!bot.ayar.has(`kbotlar.${user.id}`)) {%>
+        <h5 style="color:white">
+          Sistemde hiç sana ait bot bulunmuyor.
+   </h5>
+   <% } %>
+   <% } else if (!bot.ayar.has('botlar')) {%>
+        <h5 style="color:white">
+          Sistemde hiç bot bulunmuyor.
+   </h5>
+   <% } %>
+
+</div></div>
+<% include ./ek/footer %>

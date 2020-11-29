@@ -1,0 +1,82 @@
+<%- include('ek/header', {bot, user, path}) %>
+<div class="container">
+  
+	 <div class="jumbotron">
+		<div align="center">
+			<img src="https://cdn.discordapp.com/avatars/<%=bot.user.id%>/<%=bot.user.avatar%>.png" width="200px"  height="200px" style="float:left;" class="d-inline-block align-top">
+<br/><b style="font-size:27px;">BOT LIST</b><br/>
+			<b style="font-size:16px;">You can add your bot and promote it to other people.</b><br/>
+        <div><br/>
+   <input type="search" placeholder="Seach Bot" id="ara" name="ara">
+    
+  </div>
+    </div>
+     <br/><br/>
+    </div>
+  
+  
+    <h3 align="center"> CERTIFIED BOATS </h3>
+  <br/>
+  <div class="row">
+    
+    <% if (bot.ayar.has('botlar')) { %>
+  <% const sorted = Object.keys(bot.ayar.fetch('botlar')).sort((a, b) => { return (bot.ayar.fetch(`botlar.${b}.oy`) || 0) - (bot.ayar.fetch(`botlar.${a}.oy`) || 0) }) %>
+  <% const top = sorted.splice(0, Object.keys(bot.ayar.fetch('botlar')).length) %>
+  <% const map = top.map(x=>x) %>
+	<% for(var i = 0; i < Object.keys(bot.ayar.fetch('botlar')).length; i++) { %>
+  <% let idd = map[i] %>
+   <% if(bot.ayar.has(`botlar.${idd}.durum`) === true) { %>
+    <% if (bot.ayar.fetch(`botlar.${idd}.durum`) === "Onaylı") { %>
+      <% if (bot.ayar.has(`botlar.${idd}.sertifika`) === true) { %>
+      <div class="col-12 col-sm-6 col-md-4">
+        <div class="card card-lg botcard" style="background-color:#312538; width: 350px; border:1px solid black;">
+     <div  style="margin:5%;"class="card-img"><br/>
+         &emsp;<a href="/bot/<%=idd%>"><img src="<%=bot.ayar.fetch(`botlar.${idd}.avatar`)%>" style="width:100px; height:100px; border-radius:5px; float:left;" ></a>
+      <strong style='color: white;'><img src="https://www.flaticon.com/svg/static/icons/svg/2673/2673064.svg" width="20px" height="20px;"> <span style='color:whitesmoke; text-transform: none;'><%=bot.ayar.fetch(`botlar.${idd}.oy`)||0%></strong></span><br/>
+       &emsp;<a style="color:white; font-size:30px;"><%=bot.useful.seg(bot.ayar.fetch(`botlar.${idd}.isim`), 5)%><img src="https://cdn.discordapp.com/emojis/780805057846837289.png?v=1" width="20px" height="20px"></a><br/>
+       <a class="card-text" style="color:white">&emsp;<%=bot.ayar.fetch(`botlar.${idd}.sahip`)%></a>
+                            </div>
+                            <div style="background-color:#312538" class="card-block">
+                             <p class="card-text" style="color:white; font-size:15px; ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=bot.ayar.fetch(`botlar.${idd}.kisaaciklama`)%></p>
+                             <hr class="ys"/>
+                              <h6 align="center"><a href="/bot/<%=idd%>"><button style="font-size:20px; color:white; background-color:#312538; border:none; width:150px; height:35px; border-radius:5px">View</button></a>&nbsp;
+                                <a href="https://discordapp.com/oauth2/authorize?client_id=<%=idd%>&scope=bot&permissions=8" ><button style="font-size:20px; color:white; background-color:#312538; border:none; width:150px; height:35px; border-radius:5px">Invite</button></a></h6>
+                            </div>
+                       </div><br>
+      </div>
+      <% } %>
+    <% } %>
+    <% } %>
+   <% } %>
+    <% } else { %>
+    <div align="center">
+      <h5 align="center" style="color:#222">
+      
+      </h5>
+    </div>
+    <% } %>
+</div></div></div>
+
+<script>
+$(document).ready(function(){
+ $("#ara").keyup(function(){
+    var value = $(this).val().toLowerCase();
+    $(".col-12, .col-sm-6, .col-md-4 .card").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+  //etiket filtresi
+  $("#etiketselect").change(function(){
+    var value = $(this).val();
+    if (value === 'noneFilter') {
+      window.location.reload(true);
+      return
+    }
+    $(".col-12, .col-sm-6, .col-md-4 .card").filter(function(){
+      $(this).toggle($(this).text().indexOf(value) > -1)
+    });
+  })
+  ;
+});
+</script>
+<% include ./ek/footer %>

@@ -1,0 +1,28 @@
+<%- include('ek/header', {bot, user, path}) %>
+<div class="container">
+  <style> body { background-color:#0f0f0f; } strong { color:white; } h3 { color:white; } p { color:white; } </style>
+  <div align="center"><br>
+    <div class="jumbotron" style="background-color:#0f0f0f; border-radius:40px;">
+  <h3 style="color:#fff">
+    TheBotCity - API
+  </h3>
+		<br><br><br>
+      <h4 style="color:#fff">
+        <strong>GET</strong> /botlar/{bot_id}
+      </h4>
+		   <p style="color:lightgrey">
+         It shows the system information of a bot whose ID you have specified in our system.<br>
+         <i>Example link; <a href="/api/botlar/780697317556617226">https://thebotcity.glitch.me/api/botlar/780697317556617226</a></i>
+      </p>
+      <br><br>
+      <h4 style="color:#fff">
+        <strong>GET</strong> /botlar/{bot_id}/oylar/{user_id}
+      </h4>
+		   <p style="color:lightgrey">
+         The ID of a boat in our system that you specify shows whether the user you specified voted or not during the day. If he did not vote, it writes null.<br>
+         <i>Example link; <a href="/api/botlar/780697317556617226/oylar/534786476504776704">https://thebotcity.glitch.me/api/botlar/780697317556617226/oylar/534786476504776704</a></i>
+      </p>
+      <br><br>
+</div>
+  </div></div></div>
+<% include ./ek/footer %>
